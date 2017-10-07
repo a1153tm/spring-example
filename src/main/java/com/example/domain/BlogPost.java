@@ -26,6 +26,12 @@ public class BlogPost {
 	
 	private String title;
 	
+	private String content;
+	
+	public void overWrite(BlogPost other) {
+		content = other.content;
+	}
+	
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
