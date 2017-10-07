@@ -31,19 +31,19 @@ public class UserRestController {
     UserService userService;
 
     @GetMapping
-    Page<User> getCustomers(@PageableDefault Pageable pageable) {
+    Page<User> getUsers(@PageableDefault Pageable pageable) {
         Page<User> users = userService.findAll(pageable);
         return users;
     }
 
     @GetMapping(path = "{id}")
-    User getCustomer(@PathVariable Integer id) {
+    User getUser(@PathVariable Integer id) {
         User user = userService.findOne(id);
         return user;
     }
 
     @PostMapping
-    ResponseEntity<User> postCustomers(@RequestBody User user, UriComponentsBuilder uriBuilder) {
+    ResponseEntity<User> postUsers(@RequestBody User user, UriComponentsBuilder uriBuilder) {
         User created = userService.create(user);
         URI location = uriBuilder.path("api/users/{id}")
                 .buildAndExpand(created.getId()).toUri() ;
@@ -69,14 +69,14 @@ public class UserRestController {
     }
 
     @PutMapping(path = "{id}")
-    User putCustomer(@PathVariable Integer id, @RequestBody User user) {
+    User putUser(@PathVariable Integer id, @RequestBody User user) {
         user.setId(id);
         return userService.update(user);
     }
 
     @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteCustomer(@PathVariable Integer id) {
+    void deleteUser(@PathVariable Integer id) {
         userService.delete(id);
     }
 }

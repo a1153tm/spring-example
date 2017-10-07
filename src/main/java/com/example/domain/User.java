@@ -31,6 +31,8 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
+	private EmailAddress emailAddress;
+
 	@JsonManagedReference
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "owner")
 	private List<BlogPost> blogPosts = new ArrayList<BlogPost>();

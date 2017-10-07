@@ -1,5 +1,6 @@
 {
 	"firstName": "du",
 	"lastName": "dada",
-	"role": "Admin"
+	"role": "Admin",
+    "emailAddress": "aaa@bbb.com"
 }
