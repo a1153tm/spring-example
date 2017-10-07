@@ -1,6 +1,7 @@
 package com.example.api;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -57,6 +58,14 @@ public class UserRestController {
         URI location = uriBuilder.path("api/users/{id}")
                 .buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(location).body(user);
+    }
+
+    @PutMapping(path = "{id}/blog-posts")
+    User putBlogPosts(@PathVariable Integer id, @RequestBody List<BlogPost> blogPosts) {
+        User user = userService.findOne(id);
+        user.updateBlogPosts(blogPosts);
+        userService.update(user);
+        return user;
     }
 
     @PutMapping(path = "{id}")

@@ -43,6 +43,14 @@ public class User {
     		this.blogPosts.add(blogPost);
     }
     
+    public void updateBlogPosts(List<BlogPost> blogPosts) {
+    		for(BlogPost blogPost : blogPosts) {
+    			if (this.blogPosts.stream().filter(b -> b.getTitle().equals(blogPost.getTitle())).count() == 0) {
+    				this.addBlogPost(blogPost);
+    			}
+    		}
+    }
+    
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
