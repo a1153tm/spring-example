@@ -13,29 +13,24 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "blog_posts")
-public class BlogPost {
+@Table(name = "settings")
+public class Setting {
     @Id
     @GeneratedValue
     private Integer id;
 
     @JsonBackReference
 	@ManyToOne
+	@JoinColumn(name = "owner_id")
 	private User owner;
 	
-	private String title;
-	
-	private String content;
-	
-	public void overWrite(BlogPost other) {
-		content = other.content;
-	}
+	private String value;
 	
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BlogPost )) return false;
-        return id != null && id.equals(((BlogPost) o).id);
+        if (!(o instanceof Setting )) return false;
+        return id != null && id.equals(((Setting) o).id);
     }
     @Override
     public int hashCode() {

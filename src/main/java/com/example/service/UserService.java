@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,23 @@ public class UserService {
 	UserRepository userRepository;
 
 	public List<User> findAll() {
-		return userRepository.findAllOrderByName();
+		return userRepository.findAll();
+	}
+	
+	/*
+	public List<User> findAllWithBlogPosts() {
+		return userRepository.findAllWithBlogPosts();
+	}
+	*/
+
+	public Optional<User> findByFistName(String firstName) {
+		 List<User> users = userRepository.findByFirstName(firstName);
+		 if (users.isEmpty()) {
+			 return Optional.empty();
+		 } else {
+			 return Optional.of(users.get(0));
+		 }
+			 
 	}
 
 	public Page<User> findAll(Pageable pageable) {

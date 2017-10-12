@@ -3,10 +3,10 @@ package com.example.api;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.domain.BlogPost;
 import com.example.domain.User;
+import com.example.domain.UserJson;
 import com.example.service.UserService;
 
 @RestController
@@ -31,8 +32,11 @@ public class UserRestController {
     UserService userService;
 
     @GetMapping
-    Page<User> getUsers(@PageableDefault Pageable pageable) {
-        Page<User> users = userService.findAll(pageable);
+    //Page<User> getUsers(@PageableDefault Pageable pageable) {
+    List<User> getUsers() {
+        //Page<User> users = userService.findAll(pageable);
+        //List<User> users = userService.findAllWithBlogPosts();
+        List<User> users = userService.findAll();
         return users;
     }
 
@@ -42,8 +46,20 @@ public class UserRestController {
         return user;
     }
 
+    /*
     @PostMapping
-    ResponseEntity<User> postUsers(@RequestBody User user, UriComponentsBuilder uriBuilder) {
+    ResponseEntity<User> postUsers(@RequestBody @Valid User user, UriComponentsBuilder uriBuilder) {
+        User created = userService.create(user);
+        URI location = uriBuilder.path("api/users/{id}")
+                .buildAndExpand(created.getId()).toUri() ;
+        return ResponseEntity.created(location).body(created);
+    }
+    */
+
+    @PostMapping
+    ResponseEntity<User> postUsers(@RequestBody @Valid UserJson userJson, UriComponentsBuilder uriBuilder) {
+    		User user = new User();
+    		BeanUtils.copyProperties(userJson, user);
         User created = userService.create(user);
         URI location = uriBuilder.path("api/users/{id}")
                 .buildAndExpand(created.getId()).toUri() ;
